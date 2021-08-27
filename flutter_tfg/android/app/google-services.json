@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "937489487620",
+    "project_id": "tfg-pedrogarciacereijo",
+    "storage_bucket": "tfg-pedrogarciacereijo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937489487620:android:c4823bd97927d796fe2251",
+        "android_client_info": {
+          "package_name": "com.example.flutter_tfg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937489487620-er9h71kb2hckpc97ubsk9nm17c34l1r5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_tfg",
+            "certificate_hash": "17b1545be4f126a1551d583670a0f7ae0cd1f055"
+          }
+        },
+        {
+          "client_id": "937489487620-tqsciti9jgq2m3h92vs34i02htt9gqnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdYfuY8pdFM_wPI4pAkZTw4gBhA-msWjk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937489487620-tqsciti9jgq2m3h92vs34i02htt9gqnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

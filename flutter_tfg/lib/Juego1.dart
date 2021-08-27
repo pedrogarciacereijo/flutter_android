@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'Styles.dart';
+import 'ui/Styles.dart';
 import 'home_page.dart';
 
 class GamePage extends StatefulWidget {
@@ -15,25 +16,38 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   static String letra;
-  static String text;
+  int contadorLetrasCorrectas;
+  int contadorAciertos;
 
   @override
   void initState() {
     super.initState();
-    
+  }
+
+  Row oneRow(String letra) {
+    return Row(
+      children: createButtons(letra),
+      mainAxisAlignment: MainAxisAlignment.center,
+    );
+  }
+
+  List<Row> createRows(String letra) {
+    List<Row> rowList = new List<Row>.filled(9, null);
+    for (var i = 0; i <= 8; i++) {
+      rowList[i] = oneRow(letra);
+    }
+    return rowList;
   }
 
   List<SizedBox> createButtons(String letra) {
     List<SizedBox> buttonList = new List<SizedBox>.filled(9, null);
 
     for (var i = 0; i <= 8; i++) {
-
-      text = elegirLetra(letra);
       buttonList[i] = SizedBox(
-        width: 38,
-        height: 38,
+        width: MediaQuery.of(context).size.width * 0.09,
+        height: MediaQuery.of(context).size.height * 0.09,
         child: SizedBox.expand(
-          child: Button(),
+          child: Button(letra, elegirLetra(letra)),
         )
       );
     }
@@ -72,23 +86,18 @@ class _GamePageState extends State<GamePage> {
           aux = 'p';
           break;
       }
+    } else {
+      contadorLetrasCorrectas++;
     }
     return aux;
   }
 
-  Row oneRow(String letra) {
-    return Row(
-      children: createButtons(letra),
-      mainAxisAlignment: MainAxisAlignment.center,
-    );
+  void aumentarContadorAciertos(){
+    contadorAciertos++;
   }
 
-  List<Row> createRows(String letra) {
-    List<Row> rowList = new List<Row>.filled(9, null);
-    for (var i = 0; i <= 8; i++) {
-      rowList[i] = oneRow(letra);
-    }
-    return rowList;
+  void restartGame(){
+    setState(() {});
   }
 
   showOptionModalSheet(BuildContext context) {
@@ -106,21 +115,21 @@ class _GamePageState extends State<GamePage> {
           TextStyle(inherit: false, color: Styles.foregroundColor);
           return Wrap(
             children: [
-              /*ListTile(
+              ListTile(
                 leading: Icon(Icons.refresh, color: Styles.foregroundColor),
                 title: Text('Restart Game', style: customStyle),
                 onTap: () {
                   Navigator.pop(context);
                   Timer(Duration(milliseconds: 200), () => restartGame());
                 },
-              ),*/
+              ),
 
               ListTile(
-                leading: Icon(Icons.lightbulb_outline_rounded,
-                    color: Styles.foregroundColor),
-                title: Text('Salir', style: customStyle),
-                onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => HomePage()))
+                  leading: Icon(Icons.arrow_back_rounded,
+                      color: Styles.foregroundColor),
+                  title: Text('Salir', style: customStyle),
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => HomePage()))
               )
             ]
           );
@@ -143,42 +152,39 @@ class _GamePageState extends State<GamePage> {
                     backgroundColor: Colors.blueGrey[900],
                     actions: [
                       IconButton(
-                        icon: const Icon(Icons.minimize_outlined),
-                        padding: EdgeInsets.fromLTRB(8, 0, 8, 15),
-
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.close_rounded),
-                        padding: EdgeInsets.fromLTRB(8, 8, 20, 8),
-
+                        icon: const Icon(Icons.menu_rounded),
+                        onPressed: () => showOptionModalSheet(context),
                       ),
                     ],
                   ),
             ),
             body: Builder(builder: (builder) {
-              return Center(
+              return SizedBox.expand(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: createRows(letra),
                 ),
               );
             }),
-            floatingActionButton: FloatingActionButton(
-              foregroundColor: Styles.primaryBackgroundColor,
-              backgroundColor: Styles.primaryColor,
-              onPressed: () => showOptionModalSheet(context),
-              child: Icon(Icons.menu_rounded),
-            )));
+            ));
   }
 }
 
 class Button extends StatefulWidget {
+  String letra;
+  String text;
+
+  Button(String letra, String text){
+    this.letra = letra;
+    this.text = text;
+  }
 
   UpdateButtonState createState() => UpdateButtonState();
 
 }
 
-class UpdateButtonState extends State {
+class UpdateButtonState extends State<Button> {
+  final gamepage = _GamePageState();
 
   List<Color> _colors = <Color>[
     Colors.grey,
@@ -188,14 +194,11 @@ class UpdateButtonState extends State {
 
   int _currentColorIndex = 0;
 
-  String get letra => _GamePageState.letra;
-
-  String get text => _GamePageState.text;
-
   void changeColorIndex(String letra, String text) {
     setState(() {
       if (letra == text) {
         _currentColorIndex = 2;
+        gamepage.aumentarContadorAciertos();
       } else {
         _currentColorIndex = 1;
       }
@@ -204,18 +207,28 @@ class UpdateButtonState extends State {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-        body: TextButton(
-                onPressed: () => {changeColorIndex(letra, text)},
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(_colors[_currentColorIndex]),
-                ),
-                child: Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
+        body: Container(
+          constraints: BoxConstraints.expand(),
+          child: TextButton(
+            onPressed: () => {changeColorIndex(widget.letra, widget.text)},
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(_colors[_currentColorIndex]),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                      side: BorderSide(color: Colors.red)
+                  )
+              )
+            ),
+            child: Text(
+              widget.text,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+          )
+        )
     );
   }
 

@@ -14,12 +14,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: appTitle,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: HomePage(),
-      );
+      debugShowCheckedModeBanner: false,
+      title: appTitle,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/signin': (context) => SignInScreen(),
+        '/signup': (context) => SignUpScreen(),
+        '/forgot-password': (context) => ForgotPasswordScreen(),
+      },
+    );
   }
 }
