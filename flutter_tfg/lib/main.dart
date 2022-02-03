@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_tfg/ui/screens/registrarse.dart';
 
-import 'home_page.dart';
+import 'ui/screens/home_page.dart';
+import 'ui/screens/iniciarSesion.dart';
 
-void main() {
+
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -19,11 +26,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      //home: IniciarSesionScreen(),
+      initialRoute: '/iniciarSesion',
       routes: {
-        '/': (context) => HomeScreen(),
-        '/signin': (context) => SignInScreen(),
-        '/signup': (context) => SignUpScreen(),
-        '/forgot-password': (context) => ForgotPasswordScreen(),
+        '/homePage': (context) => HomePage(),
+        '/iniciarSesion': (context) => IniciarSesionScreen(),
+        '/registrarse': (context) => RegistrarseScreen(),
       },
     );
   }

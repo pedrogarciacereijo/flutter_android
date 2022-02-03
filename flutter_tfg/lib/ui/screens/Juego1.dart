@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'ui/Styles.dart';
+import '../Styles.dart';
 import 'home_page.dart';
 
 class GamePage extends StatefulWidget {
@@ -22,6 +22,8 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
+    contadorAciertos = 0;
+    contadorLetrasCorrectas = 0;
   }
 
   Row oneRow(String letra) {
