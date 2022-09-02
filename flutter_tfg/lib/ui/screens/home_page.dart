@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_tfg/ui/screens/preGamePage2.dart';
 
-import 'Juego1.dart';
+import 'preGamePage1.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -12,130 +13,192 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  DateTime pre_backpress = DateTime.now();
+
+  Future<bool> onWillPop() async{
+    final timegap = DateTime.now().difference(pre_backpress);
+    final cantExit = timegap >= Duration(seconds: 2);
+    pre_backpress = DateTime.now();
+    if(cantExit){
+      //show snackbar
+      final snack = SnackBar(content: Text('Pulsa otra vez el botón para salir'),duration: Duration(seconds: 2),);
+      ScaffoldMessenger.of(context).showSnackBar(snack);
+      return false; // false will do nothing when back press
+    }else{
+      SystemNavigator.pop();
+      return true;   // true will exit the app
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.blueGrey, Colors.blueGrey[900]],
-            stops: [0.8, 1.0]),
-      ),
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Stack(
-            children: <Widget>[
-              ListView(
+    return WillPopScope(
+        onWillPop: onWillPop,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.blueGrey, Colors.blueGrey[900]],
+                stops: [0.8, 1.0]),
+          ),
+          child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Stack(
                 children: <Widget>[
-                  SizedBox(height: 30.0),
-                  Text(
-                    "ELIGE EL JUEGO",
-                    style: TextStyle(
-                        fontFamily: "Comix-Loud",
-                        color: Colors.white,
-                        fontSize: 15.0),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 25.0),
-                  Column(
+                  ListView(
                     children: <Widget>[
-                      Padding(
-                        padding:
-                        EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-                        child: GestureDetector(
-                          onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(builder: (_) => GamePage())),
-                          child: Row(
-                            children: <Widget>[
-                              /*Container(
-                                width: 75.0,
-                                height: 75.0,
-                                child: Image.asset("assets/images/cheers.png"),
-                              ),*/
-                              SizedBox(width: 10.0),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text("JUEGO 1",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(fontSize: 20.0)),
-                                        Text(
-                                            "Explicacion del juego 1")
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      SizedBox(height: 30.0),
+                      Text(
+                        "ELIGE EL JUEGO",
+                        style: TextStyle(
+                            fontFamily: "Comix-Loud",
+                            color: Colors.white,
+                            fontSize: 15.0),
+                        textAlign: TextAlign.center,
                       ),
-                      Padding(
-                        padding:
+                      SizedBox(height: 25.0),
+                      Column(
+                        children: <Widget>[
+                          Padding(
+                            padding:
                             EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-                        child: GestureDetector(
-                          //onTap: () => onModeSelected(Mode.KINKY),
-                          child: Opacity(
-                            opacity: 0.3,
-                            child: Row(
-                              children: <Widget>[
-                                /*Container(
+                            child: GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (_) => PreGamePage1())),
+                              child: Row(
+                                children: <Widget>[
+                                  /*Container(
                                     width: 75.0,
                                     height: 75.0,
-                                    child:
-                                        Image.asset("assets/images/mouth.png")),*/
-                                SizedBox(width: 10.0),
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text("JUEGO 2",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(fontSize: 20.0)),
-                                        ],
+                                    child: Image.asset("assets/images/cheers.png"),
+                                  ),*/
+                                  SizedBox(width: 10.0),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text("JUEGO 1",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(fontSize: 20.0)),
+                                            Text(
+                                                "Encuentra todas las letras indicadas")
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )
+                          Padding(
+                            padding:
+                            EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                            child: GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (_) => PreGamePage2())),
+                              child: Row(
+                                children: <Widget>[
+                                  /*Container(
+                                    width: 75.0,
+                                    height: 75.0,
+                                    child: Image.asset("assets/images/cheers.png"),
+                                  ),*/
+                                  SizedBox(width: 10.0),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text("JUEGO 2",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(fontSize: 20.0)),
+                                            Text(
+                                                "Encuentra todas las letras que se encuentren a la derecha o a la izquierda de la letra indicada")
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                            child: GestureDetector(
+                              //onTap: () => onModeSelected(Mode.KINKY),
+                              child: Opacity(
+                                opacity: 0.3,
+                                child: Row(
+                                  children: <Widget>[
+                                    /*Container(
+                                        width: 75.0,
+                                        height: 75.0,
+                                        child:
+                                            Image.asset("assets/images/mouth.png")),*/
+                                    SizedBox(width: 10.0),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(10.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text("MÁS JUEGOS EN EL FUTURO...",
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(fontSize: 20.0)),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
+                  /*Padding(
+                    padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                    child: IconButton(
+                      icon: Icon(FontAwesomeIcons.arrowLeft),
+                      color: Colors.white,
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),*/
                 ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.0, left: 10.0),
-                child: IconButton(
-                  icon: Icon(FontAwesomeIcons.arrowLeft),
-                  color: Colors.white,
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ),
-            ],
-          )),
+              )),
+        )
     );
   }
 }

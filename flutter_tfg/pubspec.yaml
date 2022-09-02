@@ -23,22 +23,29 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Add the dependency for the Firebase Core Flutter SDK
+  firebase_core: ^1.8.0
 
   #Google Sign In
-  firebase_auth: ^1.0.3
+  firebase_auth: ^3.3.7
   google_sign_in: ^5.0.3
+
+  #Firebase Database
+  cloud_firestore: ^3.1.8
 
   #Iconos
   cupertino_icons: ^1.0.0
-  font_awesome_flutter: 9.1.0
+  font_awesome_flutter: ^9.2.0
 
   #State Management
-  provider:  ^5.0.0
+  provider: ^6.0.2
 
   #Flushbar
   flushbar: ^1.10.4
 
-  cloud_firestore: ^2.5.2
+  #Pdf and printing
+  pdf:
+  printing:
 
 dev_dependencies:
   flutter_test:

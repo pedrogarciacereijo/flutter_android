@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tfg/models/authentication.dart';
-
-import 'home_page.dart';
-
+import 'package:flutter_tfg/models/firestore.dart';
 
 class IniciarSesionScreen extends StatefulWidget {
   _IniciarSesionScreenState createState() => _IniciarSesionScreenState();
@@ -56,35 +53,27 @@ class _IniciarSesionScreenState extends State<IniciarSesionScreen> {
 
     final loginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(color: Colors.black54)
+                )
+            )
         ),
         onPressed: () {
-          // Get username and password from the user.Pass the data to helper method
+          // Se comprueba si el usuario está autorizado para iniciar sesión
+          // (existe en la base de datos porque ha sido creado anteriormente por un admin)
+          usuarioAutorizadoInicioSesion();
 
-          AuthenticationHelper()
-              .iniciarSesion(email: _email.text, password: _password.text)
-              .then((result) {
-            if (result == null) {
-              Navigator.pushNamed(context, '/homePage');;
-            } else {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text(
-                  result,
-                  style: TextStyle(fontSize: 16),
-                ),
-              ));
-            }
-          });
         },
-        padding: EdgeInsets.all(12),
-        color: Theme.of(context).primaryColor,
         child: Text('INICIAR SESIÓN', style: TextStyle(color: Colors.white)),
       ),
     );
 
-    final forgotLabel = FlatButton(
+    final forgotLabel = TextButton(
       child: Text(
         '¿Olvidaste tu contraseña?',
         style: TextStyle(color: Colors.black54),
@@ -94,7 +83,7 @@ class _IniciarSesionScreenState extends State<IniciarSesionScreen> {
       },
     );
 
-    final signUpLabel = FlatButton(
+    final signUpLabel = TextButton(
       child: Text(
         'Crea una cuenta',
         style: TextStyle(color: Colors.black54),
@@ -131,5 +120,33 @@ class _IniciarSesionScreenState extends State<IniciarSesionScreen> {
           ),
       );
   }
+
+  void usuarioAutorizadoInicioSesion() async{
+    bool aux = await FirestoreHelper().comprobarUsuarioAutorizado(_email.text);
+    AuthenticationHelper().iniciarSesion(email: _email.text, password: _password.text).then((result) {
+      if (result == null) {
+          print(aux);
+          if (aux){
+            Navigator.pushNamed(context, '/homePage');
+          }else{
+            AuthenticationHelper().cerrarSesion();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                "Este usuario no está autorizado para iniciar sesión. SI ya tenías una cuenta, es posible que el administrador te haya dado de baja",
+                style: TextStyle(fontSize: 16),
+              ),
+            ));
+          };
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            result,
+            style: TextStyle(fontSize: 16),
+          ),
+        ));
+      }
+    });
+  }
+
 }
 
