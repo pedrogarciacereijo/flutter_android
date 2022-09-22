@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tfg/models/ejercicio.dart';
-import 'package:flutter_tfg/models/firestore.dart';
+import '../../controller/firestore.dart';
 import 'package:flutter_tfg/models/tipoEjercicio.dart';
 import 'package:flutter_tfg/ui/screens/resultados.dart';
 
