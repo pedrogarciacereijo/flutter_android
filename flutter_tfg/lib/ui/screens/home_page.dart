@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tfg/ui/screens/preGamePage2.dart';
 
-import '../../models/authentication.dart';
+import '../../controller/authentication.dart';
 import 'autenticacion/iniciarSesion.dart';
 import 'preGamePage1.dart';
 

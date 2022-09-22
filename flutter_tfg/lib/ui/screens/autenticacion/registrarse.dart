@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tfg/models/authentication.dart';
-import 'package:flutter_tfg/models/firestore.dart';
+import '../../../controller/authentication.dart';
+import '../../../controller/firestore.dart';
 
-import '../../../models/firestore.dart';
 import '../home_page.dart';
 
 class RegistrarseScreen extends StatefulWidget {
@@ -10,35 +9,11 @@ class RegistrarseScreen extends StatefulWidget {
 }
 
 class _RegistrarseScreenState extends State<RegistrarseScreen>{
-  final TextEditingController _telefono = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    
-    final telefono = TextFormField(
-      keyboardType: TextInputType.number,
-      autofocus: false,
-      controller: _telefono,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.phone,
-            color: Colors.black,
-          ), // icon is 48px widget.
-        ),
-        filled: true,
-        fillColor: Colors.grey,
-        hintStyle: TextStyle(
-          color: Colors.black,
-        ),
-        hintText: 'Teléfono de contacto',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
 
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,

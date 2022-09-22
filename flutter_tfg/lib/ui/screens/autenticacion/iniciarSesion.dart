@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tfg/models/authentication.dart';
-import 'package:flutter_tfg/models/firestore.dart';
+import '../../../controller/authentication.dart';
+import '../../../controller/firestore.dart';
 
 class IniciarSesionScreen extends StatefulWidget {
   _IniciarSesionScreenState createState() => _IniciarSesionScreenState();
