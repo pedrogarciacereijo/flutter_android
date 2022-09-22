@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tfg/ui/screens/preGamePage2.dart';
 
+import '../../models/authentication.dart';
+import 'autenticacion/iniciarSesion.dart';
 import 'preGamePage1.dart';
 
 class HomePage extends StatefulWidget {
@@ -51,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       SizedBox(height: 30.0),
                       Text(
-                        "ELIGE EL JUEGO",
+                        "ELIGE LA ACTIVIDAD",
                         style: TextStyle(
                             fontFamily: "Comix-Loud",
                             color: Colors.white,
@@ -88,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text("JUEGO 1",
+                                            Text("Diferenciar Letras",
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(fontSize: 20.0)),
                                             Text(
@@ -129,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text("JUEGO 2",
+                                            Text("Encontrar con Desplazamiento",
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(fontSize: 20.0)),
                                             Text(
@@ -171,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
-                                              Text("MÁS JUEGOS EN EL FUTURO...",
+                                              Text("Más actividades en el futuro...",
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(fontSize: 20.0)),
                                             ],
@@ -188,17 +190,27 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  /*Padding(
+                  Padding(
                     padding: EdgeInsets.only(top: 10.0, left: 10.0),
                     child: IconButton(
-                      icon: Icon(FontAwesomeIcons.arrowLeft),
+                      icon: Icon(Icons.logout),
                       color: Colors.white,
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () => _cerrarSesion(context),
                     ),
-                  ),*/
+                  ),
                 ],
               )),
         )
     );
   }
+}
+
+void _cerrarSesion(BuildContext context) {
+  AuthenticationHelper().cerrarSesion();
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute<void>(
+      builder: (BuildContext context) => IniciarSesionScreen(),
+    ),
+  );
 }

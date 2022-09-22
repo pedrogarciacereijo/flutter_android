@@ -10,45 +10,31 @@ class RegistrarseScreen extends StatefulWidget {
 }
 
 class _RegistrarseScreenState extends State<RegistrarseScreen>{
-  final TextEditingController _nombre = new TextEditingController();
-  final TextEditingController _apellidos = new TextEditingController();
+  final TextEditingController _telefono = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
-    final nombre = TextFormField(
-      keyboardType: TextInputType.emailAddress,
+    
+    final telefono = TextFormField(
+      keyboardType: TextInputType.number,
       autofocus: false,
-      controller: _nombre,
+      controller: _telefono,
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 5.0),
           child: Icon(
-            Icons.account_circle,
-            color: Colors.grey,
+            Icons.phone,
+            color: Colors.black,
           ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'Nombre',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final apellidos = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      controller: _apellidos,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.account_circle,
-            color: Colors.grey,
-          ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'Nombre',
+        ),
+        filled: true,
+        fillColor: Colors.grey,
+        hintStyle: TextStyle(
+          color: Colors.black,
+        ),
+        hintText: 'Teléfono de contacto',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -133,10 +119,7 @@ class _RegistrarseScreenState extends State<RegistrarseScreen>{
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  SizedBox(height: 48.0),
-                  nombre,
-                  apellidos,
-                  SizedBox(height: 24.0),
+                  SizedBox(height: 64.0),
                   email,
                   SizedBox(height: 24.0),
                   password,
