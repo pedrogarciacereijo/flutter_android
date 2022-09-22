@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tfg/models/ejercicio.dart';
 import '../../controller/firestore.dart';
 import 'package:flutter_tfg/models/tipoEjercicio.dart';
+import 'package:flutter_tfg/ui/screens/resultados.dart';
 
 class GamePage1 extends StatefulWidget {
   final int nivel;
